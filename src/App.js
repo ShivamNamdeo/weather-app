@@ -6,7 +6,7 @@ import moment from "moment";
 const App = () => {
 
 
-  const [data, set_data] = useState({});
+  const [data, set_data] = useState([]);
   const [data_location, set_data_location] = useState({});
   const [loading, set_loading] = useState(true);
   const api = "98243a52aafb5d914040c7a959be0e40";
@@ -18,14 +18,14 @@ const App = () => {
     fetch(`http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${api}`)
     .then(data=>data.json())
     .then(doc=>{
-    	doc.cod !== "404" ? console.log(doc):  alert("City Not Found");
+    	doc.cod !== "404" ? set_data_location(doc):  alert("City Not Found");
     })
 
     fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${api}`)
     .then(data=>data.json())
     .then(doc=>{
     	if(doc.cod !== "404"){
-    		console.log(doc);
+    		set_data(doc);
     		set_loading(false)
     	}else{
     		alert("City Not Found")
